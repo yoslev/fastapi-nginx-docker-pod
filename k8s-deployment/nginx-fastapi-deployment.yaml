@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-fastapi-deployment
+  labels:
+    app: nginx-fastapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-fastapi
+  template:
+    metadata:
+      labels:
+        app: nginx-fastapi
+    spec:
+      containers:
+        - name: fastapi
+          image: yl0070/nginx:v1
+          ports:
+            - containerPort: 8000

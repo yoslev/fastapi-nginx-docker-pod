@@ -1,0 +1,1 @@
+docker push yl0070/nginx:v1

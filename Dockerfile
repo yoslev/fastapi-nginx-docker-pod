@@ -1,15 +1,16 @@
-FROM nginx/unit:1.23.0-python3.9
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
 
-COPY ./config/config.json /docker-entrypoint.d/config.json
+WORKDIR /build
+
+# COPY requirements.txt .
 
 RUN mkdir build
+COPY . .
 
-COPY . ./build
 
-RUN apt update && apt install -y python3-pip                                  \
-    && pip3 install -r /build/requirements.txt                               \
-    && apt remove -y python3-pip                                              \
-    && apt autoremove --purge -y                                              \
-    && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list
+RUN pip3 install -r ./requirements.txt
 
-EXPOSE 80
+## COPY . .
+
+# CMD ["cd", "app", "uvicorn", "main:my_fastapi_app", "--host", "0.0.0.0", "--port", "8000"]
+CMD cd app; uvicorn main:my_fastapi_app --host 0.0.0.0 --port 8000

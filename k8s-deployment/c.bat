@@ -1,0 +1,1 @@
+curl http://mydomain.com/app1

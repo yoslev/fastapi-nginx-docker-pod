@@ -1,1 +1,1 @@
-docker build . -t nginx
+docker build -t yl0070/nginx:v1 .

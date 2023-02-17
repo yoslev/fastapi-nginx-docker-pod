@@ -1,0 +1,1 @@
+kubectl delete ingress my-ingress
