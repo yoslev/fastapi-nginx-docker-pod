@@ -16,8 +16,8 @@ pipeline {
             steps {
                 echo 'Publishing..'
                 withCredentials([string(credentialsId: 'docker-hub-creds', variable: 'DOCKER_HUB_CREDS')]) {
-                    sh 'docker login -u ${DOCKER_HUB_CREDS_USR} -p ${DOCKER_HUB_CREDS_PSW}'
-                    sh 'docker push ${DOCKER_HUB_CREDS_USR}/nginx:v1'
+                    sh 'docker login -u yl0070 -p Aa123456'
+                    sh 'docker push yl0070/nginx:v1'
                 }
             }
         }
