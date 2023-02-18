@@ -4,22 +4,16 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Clone the repository and build the Docker image
-                script {
-                    docker.withServer('tcp://localhost:2375') {
-                        def app = docker.build('yl0070/nginx:v1')
-                    }
-                }
+                echo '777777777777777777 Building..'
+                sh 'docker build -t yl0070/nginx:v1 .'
             }
         }
-
-        stage('Deploy') {
+        stage('Publish') {
             steps {
-                // Run the Docker container
-                script {
-                    docker.withServer('tcp://localhost:2375') {
-                        def app = docker.run('yl0070/nginx:v1')
-                    }
+                echo 'Publishing..'
+                withCredentials([string(credentialsId: 'docker-hub-creds', variable: 'DOCKER_HUB_CREDS')]) {
+                    sh 'docker login -u ${DOCKER_HUB_CREDS_USR} -p ${DOCKER_HUB_CREDS_PSW}'
+                    sh 'docker push ${DOCKER_HUB_CREDS_USR}/nginx:v1'
                 }
             }
         }
