@@ -12,14 +12,18 @@ pipeline {
             steps {
                 echo 'Publishing..'
                 bat 'docker login -u yl0070 -p Aa123456'
-                bat 'docker push yl0070/nginx:v1'
+//                 bat 'docker push yl0070/nginx:v1'
             }
         }
         stage('K8s deploy deployment') {
             steps {
+              withCredentials([string(credentialsId: 'docker-hub-creds', variable: 'DOCKER_HUB_CREDS')]) {
                 echo 'K8s deploy deployment..'
-                bat 'cd k8s-deployment '
+                bat 'cd k8s-deployment'
+//                 bat 'docker login'
+//                 bat 'docker pull yl0070/nginx:v1'
                 bat 'kubectl apply -f nginx-fastapi-deployment.yaml'
+              }
             }
         }
         stage('K8s deploy Service') {
