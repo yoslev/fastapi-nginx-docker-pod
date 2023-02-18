@@ -1,86 +1,27 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:latest'
-            args '--privileged'
-        }
-    }
-
-    environment {
-        REGISTRY_CREDENTIALS = credentials('docker-hub-creds')
-        DOCKER_IMAGE = 'yl0070/nginx:v1'
-        K8S_NAMESPACE = 'default'
-        K8S_DEPLOYMENT_NAME = 'nginx-fastapi-deployment'
-        K8S_SERVICE_NAME = 'nginx-service'
-        K8S_INGRESS_NAME = 'my-ingress'
-        K8S_INGRESS_HOST = 'mydomain.com'
-        K8S_INGRESS_PATH = '/app1'
-    }
+    agent any
 
     stages {
-
-        stage('Pull Docker Image') {
+        stage('Build') {
             steps {
+                // Clone the repository and build the Docker image
                 script {
-                    docker.withRegistry('https://hub.docker.com//', REGISTRY_CREDENTIALS) {
-                        def dockerImage = docker.image(DOCKER_IMAGE)
-                        dockerImage.pull()
+                    docker.withServer('tcp://localhost:2375') {
+                        def app = docker.build('yl0070/nginx:v1')
                     }
                 }
             }
         }
 
-        stage('Deploy to Kubernetes') {
+        stage('Deploy') {
             steps {
+                // Run the Docker container
                 script {
-                    def labels = [
-                        app: K8S_DEPLOYMENT_NAME,
-                        env: env.BRANCH_NAME,
-                        build: env.BUILD_NUMBER
-                    ]
-
-                    def container = [
-                        name: K8S_DEPLOYMENT_NAME,
-                        image: DOCKER_IMAGE
-                    ]
-
-                    kubernetesDeploy(
-                        kubeconfigId: 'your-kubeconfig-id',
-                        configs: 'your-kubernetes-configmap',
-                        container: container,
-                        namespace: K8S_NAMESPACE,
-                        replicas: 1,
-                        labels: labels,
-                        enableConfigSubstitution: true,
-                        wait: true
-                    )
-
-                    kubernetesDeployService(
-                        kubeconfigId: 'your-kubeconfig-id',
-                        name: K8S_SERVICE_NAME,
-                        namespace: K8S_NAMESPACE,
-                        port: 80,
-                        targetPort: 8080,
-                        labels: labels,
-                        enableConfigSubstitution: true,
-                        wait: true
-                    )
-
-                    kubernetesDeployIngress(
-                        kubeconfigId: 'your-kubeconfig-id',
-                        name: K8S_INGRESS_NAME,
-                        namespace: K8S_NAMESPACE,
-                        host: K8S_INGRESS_HOST,
-                        path: K8S_INGRESS_PATH,
-                        serviceName: K8S_SERVICE_NAME,
-                        servicePort: 80,
-                        labels: labels,
-                        enableConfigSubstitution: true,
-                        wait: true
-                    )
+                    docker.withServer('tcp://localhost:2375') {
+                        def app = docker.run('yl0070/nginx:v1')
+                    }
                 }
             }
         }
-
     }
 }
