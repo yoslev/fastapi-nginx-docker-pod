@@ -5,16 +5,33 @@ pipeline {
         stage('Build') {
             steps {
                 echo '777777777777777777 Building..'
-                sh 'docker build -t yl0070/nginx:v1 .'
+                bat 'docker build -t yl0070/nginx:v1 .'
             }
         }
         stage('Publish') {
             steps {
                 echo 'Publishing..'
-                withCredentials([string(credentialsId: 'docker-hub-creds', variable: 'DOCKER_HUB_CREDS')]) {
-                    sh 'docker login -u ${DOCKER_HUB_CREDS_USR} -p ${DOCKER_HUB_CREDS_PSW}'
-                    sh 'docker push ${DOCKER_HUB_CREDS_USR}/nginx:v1'
-                }
+                bat 'docker login -u yl0070 -p Aa123456'
+                bat 'docker push yl0070/nginx:v1'
+            }
+        }
+        stage('K8s deploy deployment') {
+            steps {
+                echo 'K8s deploy deployment..'
+                bat 'cd k8s-deployment '
+                bat 'kubectl apply -f nginx-fastapi-deployment.yaml'
+            }
+        }
+        stage('K8s deploy Service') {
+            steps {
+                echo 'K8s deploy Service..'
+                bat 'kubectl apply -f nginx-service.yaml'
+            }
+        }
+        stage('K8s deploy Ingress') {
+            steps {
+                echo 'K8s deploy Service..'
+                bat 'kubectl create -f ingress.yaml'
             }
         }
     }
