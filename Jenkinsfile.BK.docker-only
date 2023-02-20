@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo '777777777777777777 Building..'
+                bat 'docker build -t yl0070/nginx:v1 .'
+            }
+        }
+        stage('Publish') {
+            steps {
+                echo 'Publishing..'
+                bat 'docker login -u yl0070 -p Aa123456'
+                bat 'docker push yl0070/nginx:v1'
+            }
+        }
+        stage('K8s deploy deployment') {
+            steps {
+                echo 'K8s deploy deployment..'
+                bat 'cd k8s-deployment && kubectl apply -f nginx-fastapi-deployment.yaml'
+            }
+        }
+        stage('K8s deploy Service') {
+            steps {
+                echo 'K8s deploy Service..'
+                bat 'kubectl apply -f nginx-service.yaml'
+            }
+        }
+        stage('K8s deploy Ingress') {
+            steps {
+                echo 'K8s deploy Service..'
+                bat 'kubectl create -f ingress.yaml'
+            }
+        }
+    }
+}
