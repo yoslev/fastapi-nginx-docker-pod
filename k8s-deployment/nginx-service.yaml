@@ -8,7 +8,7 @@ spec:
   ports:
     - name: http
       port: 8081
-      targetPort: 8081
+      targetPort: 8000
 
   type: LoadBalancer
 # loadBalancerIP: 127.0.0.1
