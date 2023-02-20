@@ -1,1 +1,1 @@
-kubectl create -f ../ingress.yaml
+kubectl create -f ../../ingress.yaml

@@ -1,1 +1,1 @@
-kubectl apply -f ../nginx-fastapi-deployment.yaml 
+kubectl apply -f ../../nginx-fastapi-deployment.yaml 
