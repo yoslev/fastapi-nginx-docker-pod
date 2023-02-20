@@ -34,5 +34,13 @@ pipeline {
                 sh 'cd k8s-deployment && pwd && echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f ingress.yaml'
             }
         }
+        stage('K8s describe all') {
+            steps {
+                echo 'K8s describe all..'
+                sh 'cd k8s-deployment &&  echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  get all'
+                sh 'cd k8s-deployment &&  echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  get ingress'
+                sh 'echo "Aa123456Aa" | sudo -S  curl -i  http://www.mydomain.com/app1'
+            }
+        }
     }
 }
