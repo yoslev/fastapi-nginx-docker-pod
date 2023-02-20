@@ -1,1 +1,1 @@
-kubectl apply -f ../../nginx-service.yaml
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml apply -f ../../nginx-service.yaml
