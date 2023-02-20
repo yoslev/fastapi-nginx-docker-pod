@@ -5,37 +5,33 @@ pipeline {
         stage('Build') {
             steps {
                 echo '777777777777777777 Building..'
-                bat 'docker build -t yl0070/nginx:v1 .'
+                sh 'docker build -t yl0070/nginx:v1 .'
             }
         }
         stage('Publish') {
             steps {
                 echo 'Publishing..'
-                bat 'docker login -u yl0070 -p Aa123456'
-//                 bat 'docker push yl0070/nginx:v1'
+                sh 'docker login -u yl0070 -p Aa123456'
+                sh 'docker push yl0070/nginx:v1'
             }
         }
         stage('K8s deploy deployment') {
             steps {
-              withCredentials([string(credentialsId: 'docker-hub-creds', variable: 'DOCKER_HUB_CREDS')]) {
                 echo 'K8s deploy deployment..'
-                bat 'cd k8s-deployment'
-//                 bat 'docker login'
-//                 bat 'docker pull yl0070/nginx:v1'
-                bat 'kubectl apply -f nginx-fastapi-deployment.yaml'
-              }
+                sh 'cd k8s-deployment'
+                sh 'cd k8s-deployment && pwd && echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f nginx-fastapi-deployment.yaml'
             }
         }
         stage('K8s deploy Service') {
             steps {
                 echo 'K8s deploy Service..'
-                bat 'kubectl apply -f nginx-service.yaml'
+                sh 'cd k8s-deployment && pwd && echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f nginx-service.yaml'
             }
         }
         stage('K8s deploy Ingress') {
             steps {
                 echo 'K8s deploy Service..'
-                bat 'kubectl create -f ingress.yaml'
+                sh 'cd k8s-deployment && pwd && echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f ingress.yaml'
             }
         }
     }
