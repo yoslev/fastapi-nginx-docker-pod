@@ -1,1 +1,0 @@
-kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml get service --all-namespaces
