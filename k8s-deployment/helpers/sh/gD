@@ -1,1 +1,1 @@
-kubectl get deployments --all-namespaces
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml get deployments --all-namespaces

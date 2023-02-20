@@ -1,8 +1,8 @@
 echo SERVICE..
-kubectl describe service nginx-service
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml describe service nginx-service
 echo ----------------------------
 echo INDRESS..
-kubectl describe ingress my-ingres
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml describe ingress my-ingres
 echo ----------------------------
 echo DEPLOYMENT..
-kubectl describe deployment nginx-fastapi-deployment
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml describe deployment nginx-fastapi-deployment

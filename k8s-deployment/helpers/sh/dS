@@ -1,1 +1,1 @@
-kubectl delete -n default service nginx-service
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml delete -n default service nginx-service

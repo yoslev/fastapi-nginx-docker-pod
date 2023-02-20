@@ -1,1 +1,1 @@
-kubectl delete ingress my-ingress
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml delete ingress my-ingress

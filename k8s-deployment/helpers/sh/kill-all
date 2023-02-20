@@ -1,4 +1,4 @@
-kubectl delete ingress my-ingress
-kubectl delete -n default service nginx-service
-kubectl delete -n default deployment nginx-fastapi-deployment
-kubectl get all
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml delete ingress my-ingress
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml delete -n default service nginx-service
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml delete -n default deployment nginx-fastapi-deployment
+kubectl --kubeconfig=/root/.kube/k8s-yl-kubeconfig.yaml get all
