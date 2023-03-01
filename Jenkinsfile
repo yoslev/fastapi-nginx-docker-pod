@@ -19,27 +19,27 @@ pipeline {
             steps {
                 echo 'K8s deploy deployment..'
                 sh 'cd k8s-deployment'
-                sh 'cd k8s-deployment && pwd && echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f nginx-fastapi-deployment.yaml'
+                sh 'cd k8s-deployment && pwd && echo "10LiGisha!" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f nginx-fastapi-deployment.yaml'
             }
         }
         stage('K8s deploy Service') {
             steps {
                 echo 'K8s deploy Service..'
-                sh 'cd k8s-deployment && pwd && echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f nginx-service.yaml'
+                sh 'cd k8s-deployment && pwd && echo "10LiGisha!" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f nginx-service.yaml'
             }
         }
         stage('K8s deploy Ingress') {
             steps {
                 echo 'K8s deploy Service..'
-                sh 'cd k8s-deployment && pwd && echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f ingress.yaml'
+                sh 'cd k8s-deployment && pwd && echo "10LiGisha!" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  apply -f ingress.yaml'
             }
         }
         stage('K8s describe all') {
             steps {
                 echo 'K8s describe all..'
-                sh 'cd k8s-deployment &&  echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  get all'
-                sh 'cd k8s-deployment &&  echo "Aa123456Aa" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  get ingress'
-                sh 'echo "Aa123456Aa" | sudo -S  curl -i  http://www.mydomain.com/app1'
+                sh 'cd k8s-deployment &&  echo "10LiGisha!" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  get all'
+                sh 'cd k8s-deployment &&  echo "10LiGisha!" | sudo -S  kubectl --kubeconfig /root/.kube/k8s-yl-kubeconfig.yaml  get ingress'
+                sh 'echo "10LiGisha!" | sudo -S  curl -i  http://www.mydomain.com/app1'
             }
         }
     }
