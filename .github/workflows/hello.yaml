@@ -1,0 +1,30 @@
+name: My Workflow
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  helloJob:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v2
+    - name: Greetings
+      run: |
+        echo "Hello world 111"
+        echo "Hello world 222"
+      shell: bash
+
+  goodbyeJob:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Greetings2
+      run: |
+        echo "goodbye world 111"
+        echo "goodbye world 222"
+      shell: bash
